@@ -1,2 +1,3 @@
 # Sistema-de-Gestion-de-Biblioteca-Digital
-Gestion de una Biblioteca Digital en Python
+
+Alumnos: del Peral Acevedo Paola Romina, Dodero Leonel Ivan
