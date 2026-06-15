@@ -8,18 +8,6 @@ from libro import Libro
 from prestamo import Prestamo
 from biblioteca import Biblioteca
 
-
-
-
-
-
-
-
-
-
-
-
-
 # --- BLOQUE DE PRUEBA DEL SISTEMA ---
 if __name__ == "__main__": # Punto de entrada para ejecutar el script
     biblioteca_gestor = GestorUsuarios() # Instancia el gestor para iniciar operaciones
