@@ -8,61 +8,31 @@ from libro import Libro
 from prestamo import Prestamo
 from biblioteca import Biblioteca
 
-# --- BLOQUE DE PRUEBA DEL SISTEMA ---
-if __name__ == "__main__": # Punto de entrada para ejecutar el script
-    biblioteca_gestor = GestorUsuarios() # Instancia el gestor para iniciar operaciones
+#Singleton
+# Aunque intentemos crear dos bibliotecas, ambas apuntan al mismo objeto en memoria
+biblio1 = Biblioteca("Biblioteca Central")
+biblio2 = Biblioteca("Biblioteca Sucursal")
+print(f"¿Son la misma instancia? {biblio1 is biblio2}") 
 
-    # Ejecución de Altas de ejemplo
-    biblioteca_gestor.alta_usuario("Juan", "Perez", "12345678", "juan@mail.com") # Registro 1
-    biblioteca_gestor.alta_usuario("Ana", "Gomez", "87654321", "ana@mail.com") # Registro 2
-    
-    biblioteca_gestor.listar_usuarios() # Muestra los usuarios cargados inicialmente
-    
-    # Prueba de Modificación
-    biblioteca_gestor.modificar_usuario("12345678", "juan_nuevo@mail.com") # Cambio de correo
-    
-    # Prueba de Baja
-    biblioteca_gestor.baja_usuario("87654321") # Eliminación de un usuario
-    
-    biblioteca_gestor.listar_usuarios() # Muestra el estado final de la gestión de usuarios
+#Gestor de Usuarios
+gestor = GestorUsuarios()
+gestor.alta_usuario("Ana", "García", "11223344", "ana@correo.com")
+usuario_ana = gestor.usuarios[0]
 
-# Programa principal
-biblioteca = Biblioteca()
+#Registro de Libro
+libro_python = Libro("Python Pro", "Guido", "ISBN-999", 2026, 300)
+biblio1.agregar_libro(libro_python)
 
-while True:
-    print("\n--- GESTIÓN DE LIBROS ---")
-    print("1. Alta de libro")
-    print("2. Modificar libro")
-    print("3. Eliminar libro")
-    print("4. Listar libros")
-    print("5. Salir")
+#Prueba del Decorador (Validación)
+# Primer préstamo: debería funcionar
+biblio1.registrar_prestamo(usuario_ana, libro_python, "2026-06-24")
 
-    opcion = input("Seleccione una opción: ")
+# Intentamos prestar el mismo libro otra vez: el decorador debería bloquearlo
+biblio1.registrar_prestamo(usuario_ana, libro_python, "2026-06-25")
 
-    if opcion == "1":
-        titulo = input("Título: ")
-        autor = input("Autor: ")
-        isbn = input("ISBN: ")
-        anio = int(input("Año de publicación: "))
-        paginas = int(input("Cantidad de páginas: "))
+#Devolución
+biblio1.devolver_libro("ISBN-999", "2026-06-30")
 
-        libro = Libro(titulo, autor, isbn, anio, paginas)
-        biblioteca.agregar_libro(libro)
-
-    elif opcion == "2":
-        isbn = input("Ingrese ISBN del libro a modificar: ")
-        biblioteca.modificar_libro(isbn)
-
-    elif opcion == "3":
-        isbn = input("Ingrese ISBN del libro a eliminar: ")
-        biblioteca.eliminar_libro(isbn)
-
-    elif opcion == "4":
-        biblioteca.listar_libros()
-
-    elif opcion == "5":
-        print("Fin del programa.")
-        break
-
-    else:
-        print("Opción inválida.")
+#Polimorfismo y Composición
+# Mostramos el perfil del usuario (incluye datos de la Cuenta, que es composición)
+gestor.listar_usuarios()
