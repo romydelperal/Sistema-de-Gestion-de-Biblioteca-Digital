@@ -123,6 +123,10 @@ python main.py
 
 ---
 
+## Grupo
+
+Grupo 13 
+
 ## Integrantes
 
 * del Peral Acevedo Paola Romina
